@@ -2,7 +2,7 @@
 
 ## Overview
 
-This knowledge base provides comprehensive documentation for MS-DIAL (Mass Spectrometry Data Independent AcquisitionaL software), covering installation, usage, workflows, and best practices.
+This knowledge base provides comprehensive documentation for MS-DIAL (Mass Spectrometry - Data Independent AnaLysis), covering installation, usage, workflows, and best practices.
 
 ## Documentation Structure
 

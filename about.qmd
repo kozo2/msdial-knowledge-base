@@ -4,7 +4,7 @@ title: "About MS-DIAL"
 
 ## Project Overview
 
-MS-DIAL (Mass Spectrometry Data Independent AcquisitionaL software) is a comprehensive, free software for processing mass spectrometry data in metabolomics, lipidomics, and proteomics research.
+MS-DIAL (Mass Spectrometry - Data Independent AnaLysis) is a comprehensive, free software for processing mass spectrometry data in metabolomics, lipidomics, and proteomics research.
 
 ### Mission
 
