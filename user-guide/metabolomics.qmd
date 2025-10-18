@@ -1,0 +1,430 @@
+---
+title: "Metabolomics Workflows"
+---
+
+## Overview
+
+This section covers metabolomics-specific workflows in MS-DIAL, including LC-MS and GC-MS analysis for small molecule identification and quantification.
+
+## LC-MS Metabolomics
+
+### Typical Workflow
+
+1. Sample preparation and LC-MS analysis
+2. Data conversion (if needed)
+3. MS-DIAL processing
+4. Compound identification
+5. Statistical analysis
+
+### Project Setup
+
+**Ionization Mode Selection:**
+- **Positive ESI**: For basic compounds, amino acids, carnitines
+- **Negative ESI**: For organic acids, fatty acids, nucleotides
+- **Both modes**: For comprehensive coverage (run separately)
+
+**Recommended Settings:**
+- Separation: LC/MS
+- Ionization: Positive or Negative
+- MS type: DDA or DIA
+- Data type: Centroid (preferred)
+
+### Data Acquisition Strategies
+
+#### DDA (Data-Dependent Acquisition)
+
+**Advantages:**
+- High-quality MS/MS spectra
+- Good for spectral library matching
+- Easier deconvolution
+
+**Limitations:**
+- Sampling bias (misses low-abundance)
+- Run-to-run variability
+- Limited dynamic range
+
+**Recommended Parameters:**
+- Top N: 5-10 most abundant ions
+- Dynamic exclusion: 5-10 seconds
+- Intensity threshold: Adjust to sample complexity
+
+#### DIA/SWATH (Data-Independent Acquisition)
+
+**Advantages:**
+- Comprehensive MS/MS coverage
+- Better for complex samples
+- Retrospective analysis possible
+
+**Limitations:**
+- Complex spectra require deconvolution
+- More challenging for identification
+- Larger file sizes
+
+**Recommended Settings:**
+- Window width: 10-25 Da
+- Cycle time: <2 seconds
+- Collision energy: Stepped or optimized
+
+### Database Selection
+
+#### Metabolite Databases
+
+**Public Databases:**
+- **MassBank**: Large public spectral database
+- **GNPS**: Community-contributed spectra
+- **HMDB**: Human Metabolome Database (create custom MSP)
+- **METLIN**: Metabolite spectral library
+
+**Custom Databases:**
+- In-house standards library
+- Project-specific compounds
+- Pathway-focused libraries
+
+#### Creating Custom MSP
+
+Example for caffeine:
+```
+NAME: Caffeine
+PRECURSORMZ: 195.0877
+PRECURSORTYPE: [M+H]+
+RETENTIONTIME: 8.5
+FORMULA: C8H10N4O2
+INCHIKEY: RYYVLZVUVIJVGH-UHFFFAOYSA-N
+Num Peaks: 5
+110.0713 350
+138.0662 999
+165.0770 200
+178.0729 150
+195.0877 800
+```
+
+### Identification Strategies
+
+#### Level 1: Confirmed Standards
+
+- Match to authentic standard
+- Same RT and MS/MS spectrum
+- Analyzed under identical conditions
+
+**Validation:**
+1. Prepare authentic standard
+2. Analyze with same method
+3. Compare RT (±0.1 min)
+4. Compare MS/MS (similarity >90%)
+
+#### Level 2: Spectral Match
+
+- Match to reference MS/MS
+- No standard analyzed
+- Confident structural assignment
+
+**Criteria:**
+- Spectral similarity >80%
+- Mass error <5 ppm
+- RT consistent with compound class
+
+#### Level 3: Tentative Match
+
+- Accurate mass match
+- Class identified from MS/MS patterns
+- Potential isomers
+
+**Criteria:**
+- Mass error <10 ppm
+- Diagnostic fragments present
+- RT plausible for class
+
+#### Level 4: Unknown
+
+- Accurate mass only
+- Molecular formula prediction
+- No structural information
+
+### Processing Parameters
+
+#### Peak Detection
+
+**Typical Settings:**
+- Minimum peak height: 2,000-5,000
+- Mass slice width: 0.1 Da
+- Smoothing level: 3
+- Minimum peak width: 5 scans
+
+**Optimization:**
+1. Use Raw Data Viewer
+2. Check intensity distribution
+3. Set threshold above noise
+4. Balance sensitivity vs. false positives
+
+#### Deconvolution
+
+**Recommended:**
+- Sigma window: 0.5
+- MS/MS abundance cutoff: 5%
+- Exclude after precursor: Yes
+- Keep isotope until peak top: Yes
+
+#### Alignment
+
+**Standard Parameters:**
+- RT tolerance: 0.1 min
+- Mass tolerance: 0.015 Da
+- Peak count filter: 50% of samples
+- Gap filling: Enabled
+
+### Quality Control
+
+#### QC Sample Strategy
+
+**Pooled QC:**
+- Mix equal volumes from all samples
+- Inject every 5-10 samples
+- Monitor throughout run
+
+**System Suitability:**
+- Standards mixture
+- Analyze before and after
+- Check retention, intensity, mass accuracy
+
+#### QC Metrics
+
+**Monitor:**
+- Retention time drift: <0.2 min
+- Mass accuracy: <5 ppm
+- Peak area CV: <20% in QC
+- Peak shape consistency
+
+**Actions:**
+- Flag QC failures
+- Consider batch effects
+- Apply normalization if needed
+
+### Data Analysis
+
+#### Statistical Analysis
+
+**Preprocessing:**
+1. Filter by blank (3x blank threshold)
+2. Filter by QC CV (<30%)
+3. Filter by sample frequency (>50%)
+4. Log transform if needed
+5. Scale/normalize
+
+**Analysis Methods:**
+- PCA: Unsupervised overview
+- PLS-DA: Supervised classification
+- Volcano plot: Differential analysis
+- Pathway analysis: Biological interpretation
+
+#### Biological Interpretation
+
+**Strategies:**
+1. Identify significant features
+2. Validate identifications
+3. Map to metabolic pathways
+4. Consider biological context
+5. Validate with targeted analysis
+
+## GC-MS Metabolomics
+
+### Workflow Overview
+
+GC-MS is ideal for:
+- Volatile compounds
+- Derivatized metabolites
+- High chromatographic resolution
+- EI-MS library matching
+
+### Sample Preparation
+
+**Derivatization:**
+- **Trimethylsilylation (TMS)**: Most common
+- **Methylation**: For acids
+- **Acetylation**: For amines
+- **Methoxymation-TMS**: Two-step for carbonyls
+
+### Project Setup
+
+**Settings:**
+- Separation: GC/MS
+- Ionization: EI (Electron Impact)
+- Data type: Centroid
+- Retention index: FAME or Alkane
+
+### Retention Index
+
+#### FAME (Fatty Acid Methyl Ester)
+
+**Requirements:**
+- Mix of FAMEs (C8-C30)
+- Must include: C8, C9, C10, C12, C14, C16, C18, C20, C22, C24, C26, C28, C30
+- Analyze with each batch
+
+**Dictionary Format:**
+```
+8    4.5
+9    5.2
+10   6.1
+12   8.3
+...
+30   28.9
+```
+
+#### Alkane (Kovats Index)
+
+**Requirements:**
+- n-Alkane mixture
+- Cover your RT range
+- Temperature-programmed GC
+
+**Calculation:**
+- Based on Kovats method
+- Carbon number vs. RT
+
+### Database Selection
+
+**GC-MS Libraries:**
+- **NIST**: Most comprehensive EI-MS library
+- **Fiehn GC-MS Library**: Metabolomics-focused
+- **Golm Metabolome Database**: Plant metabolites
+- **In-house**: Lab-specific compounds
+
+### Identification
+
+**Criteria:**
+- Spectral similarity (EI-MS)
+- Retention index match
+- Kovats/Fiehn index tolerance: ±10-20 units
+
+**Validation:**
+- Run authentic standards
+- Match RI and spectrum
+- Consider derivatization artifacts
+
+### Processing Parameters
+
+**Peak Detection:**
+- Minimum peak height: 5,000-50,000
+- Depends on instrument sensitivity
+- TIC vs. BPC consideration
+
+**Deconvolution:**
+- Critical for GC-MS
+- Resolves co-eluting compounds
+- Sigma window: 0.5-0.7
+
+**Alignment:**
+- RT tolerance: 0.05-0.1 min
+- RI tolerance: 10-20 units (if used)
+
+## Advanced Topics
+
+### Isotope Labeling
+
+**Applications:**
+- Metabolic flux analysis
+- Stable isotope tracing
+- Turnover studies
+
+**Setup in MS-DIAL:**
+1. Define labeled elements
+2. Set isotope tracking parameters
+3. Calculate incorporation rates
+4. Export for flux analysis
+
+### Pathway Analysis
+
+**Workflow:**
+1. Export identified metabolites
+2. Map to KEGG/BioCyc pathways
+3. Enrichment analysis
+4. Network visualization
+
+**Tools:**
+- MetaboAnalyst
+- KEGG Mapper
+- Cytoscape
+- Custom R/Python scripts
+
+### Multi-Omics Integration
+
+**Strategies:**
+- Correlate with transcriptomics
+- Integrate with proteomics
+- Systems biology modeling
+- Multi-omic networks
+
+## Best Practices
+
+### Experimental Design
+
+1. Include biological replicates (n≥5)
+2. Randomize run order
+3. Include QC samples
+4. Balance batches
+5. Include blanks
+
+### Data Quality
+
+1. Monitor QC metrics
+2. Check mass calibration
+3. Verify RT stability
+4. Inspect peak shapes
+5. Validate identifications
+
+### Reporting
+
+1. Document all parameters
+2. Report identification confidence
+3. Include QC data
+4. Provide raw data
+5. Follow FAIR principles
+
+---
+
+::: {.callout-tip}
+## Metabolomics Standards Initiative (MSI)
+
+Follow MSI guidelines for reporting metabolomics data. Include sample preparation, acquisition parameters, processing details, and identification confidence levels.
+:::
+
+## Common Issues and Solutions
+
+### Low Identification Rate
+
+**Causes:**
+- Limited database coverage
+- Incorrect parameters
+- Poor MS/MS quality
+
+**Solutions:**
+- Try multiple databases
+- Relax tolerances slightly
+- Use in silico tools (MS-FINDER)
+- Consider untargeted approach
+
+### High Coefficient of Variation
+
+**Causes:**
+- Sample degradation
+- Ion suppression
+- Instrument drift
+
+**Solutions:**
+- Improve sample handling
+- Use internal standards
+- Apply normalization
+- Check chromatographic conditions
+
+### Retention Time Shifts
+
+**Causes:**
+- Column degradation
+- Temperature variation
+- Mobile phase issues
+
+**Solutions:**
+- Replace column if needed
+- Check column temperature control
+- Prepare fresh mobile phases
+- Use RT alignment in MS-DIAL

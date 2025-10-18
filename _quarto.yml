@@ -1,0 +1,63 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "MS-DIAL Knowledge Base"
+  description: "Comprehensive knowledge base for MS-DIAL - Mass Spectrometry Data Independent AcquisitionaL software"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: getting-started.qmd
+        text: Getting Started
+      - href: installation.qmd
+        text: Installation
+      - text: "User Guide"
+        menu:
+          - user-guide/overview.qmd
+          - user-guide/data-processing.qmd
+          - user-guide/metabolomics.qmd
+          - user-guide/lipidomics.qmd
+      - href: tutorials.qmd
+        text: Tutorials
+      - href: faq.qmd
+        text: FAQ
+      - href: about.qmd
+        text: About
+    right:
+      - icon: github
+        href: https://github.com/systemsomicslab/MsdialWorkbench
+        text: MS-DIAL on GitHub
+
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - section: "Getting Started"
+        contents:
+          - getting-started.qmd
+          - installation.qmd
+      - section: "User Guide"
+        contents:
+          - user-guide/overview.qmd
+          - user-guide/data-processing.qmd
+          - user-guide/metabolomics.qmd
+          - user-guide/lipidomics.qmd
+      - section: "Resources"
+        contents:
+          - tutorials.qmd
+          - faq.qmd
+          - about.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 3
+    code-copy: true
+    code-fold: false
+
+execute:
+  freeze: auto

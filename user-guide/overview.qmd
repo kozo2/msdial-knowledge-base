@@ -1,0 +1,327 @@
+---
+title: "User Guide Overview"
+---
+
+## Welcome to the MS-DIAL User Guide
+
+This comprehensive guide covers all aspects of using MS-DIAL for mass spectrometry data analysis. Whether you're new to MS-DIAL or an experienced user, you'll find detailed information about features, parameters, and workflows.
+
+## Guide Organization
+
+The user guide is organized into the following sections:
+
+### [Data Processing](data-processing.qmd)
+- Project creation and setup
+- Data import and file formats
+- Peak detection and deconvolution
+- Alignment and normalization
+- Quality control
+
+### [Metabolomics](metabolomics.qmd)
+- LC-MS/MS metabolomics workflows
+- Database selection and management
+- Compound identification strategies
+- Data-dependent acquisition (DDA)
+- Data-independent acquisition (DIA/SWATH)
+
+### [Lipidomics](lipidomics.qmd)
+- Lipidomics-specific workflows
+- Lipid class annotation
+- Acyl chain identification
+- MS-DIAL lipid databases
+- Advanced lipidomics features
+
+## Common Workflows
+
+### Basic Workflow
+
+A typical MS-DIAL analysis follows these steps:
+
+1. **Project Creation**
+   - Define project location
+   - Select data files
+   - Configure file information
+
+2. **Parameter Setup**
+   - Set instrument parameters
+   - Configure processing settings
+   - Select identification databases
+
+3. **Data Processing**
+   - Peak detection
+   - Deconvolution
+   - Alignment
+   - Gap filling
+
+4. **Identification**
+   - MSP library matching
+   - Accurate mass search
+   - Post-identification
+
+5. **Quality Control**
+   - Review results
+   - Filter low-quality peaks
+   - Validate identifications
+
+6. **Export**
+   - Peak tables
+   - Spectral data
+   - Statistical analysis formats
+
+## Key Concepts
+
+### Data Types
+
+**Centroid vs Profile**
+- **Centroid**: Peaks represented as single points
+- **Profile**: Continuous m/z intensity profiles
+
+Use Raw Data Viewer to determine your data type.
+
+### Acquisition Modes
+
+**DDA (Data-Dependent Acquisition)**
+- MS1 scan followed by targeted MS/MS
+- Best for low-complexity samples
+- Higher quality MS/MS spectra
+
+**DIA (Data-Independent Acquisition)**
+- Systematic MS/MS acquisition
+- Better for complex samples
+- Requires deconvolution
+
+### Ionization Modes
+
+**Positive Mode**
+- Proton addition [M+H]+
+- Sodium/potassium adducts
+- Common for bases, amines
+
+**Negative Mode**
+- Proton loss [M-H]-
+- Acetate/formate adducts
+- Common for acids, phenols
+
+### Adduct Types
+
+MS-DIAL supports extensive adduct ion types:
+
+**Common Positive Adducts:**
+- [M+H]+
+- [M+Na]+
+- [M+K]+
+- [M+NH4]+
+- [2M+H]+
+
+**Common Negative Adducts:**
+- [M-H]-
+- [M+FA-H]- (formate)
+- [M+Hac-H]- (acetate)
+- [M+Cl]-
+- [2M-H]-
+
+## Parameter Settings
+
+### Critical Parameters
+
+**MS1 Tolerance**
+- Typical: 0.01 Da or 5-10 ppm
+- Depends on instrument mass accuracy
+- Lower for high-resolution MS
+
+**MS2 Tolerance**
+- Typically: 0.05 Da or 15-25 ppm
+- Can be higher than MS1
+- Consider instrument resolution
+
+**Retention Time Tolerance**
+- Typical: 0.05-0.5 min
+- Depends on chromatographic stability
+- Wider for long runs or gradients
+
+**Peak Height Threshold**
+- Typical: 1,000-10,000
+- Use Raw Data Viewer to determine
+- Balance sensitivity vs. noise
+
+### Deconvolution Settings
+
+**Sigma Window Value**
+- Controls peak width detection
+- Typical: 0.5-0.7
+- Lower for sharper peaks
+
+**MS/MS Abundance Cutoff**
+- Minimum intensity for MS/MS ions
+- Typical: 0-10%
+- Higher values reduce noise
+
+## Database Management
+
+### MSP Libraries
+
+MSP format spectral libraries include:
+- Compound name
+- Precursor m/z
+- Retention time (optional)
+- Adduct type
+- MS/MS spectrum
+
+**Creating Custom MSP:**
+```
+NAME: Glucose
+PRECURSORMZ: 180.0634
+PRECURSORTYPE: [M+H]+
+RETENTIONTIME: 5.2
+FORMULA: C6H12O6
+Num Peaks: 5
+61.0284 150
+73.0284 300
+85.0284 200
+97.0284 500
+163.0612 999
+```
+
+### Text Libraries
+
+Simple format for accurate mass + RT:
+```
+Metabolite    m/z       RT    Adduct
+Glucose      180.0634  5.2   [M+H]+
+Fructose     180.0634  4.8   [M+H]+
+```
+
+## Quality Control
+
+### QC Samples
+
+Include these sample types:
+- **Pooled QC**: Monitor system stability
+- **Blank**: Identify contamination
+- **Standards**: Validate identification
+- **Biological samples**: Your experimental data
+
+### Quality Metrics
+
+Monitor:
+- Peak shape and width
+- Mass accuracy
+- Retention time stability
+- Signal intensity
+- MS/MS quality
+
+### Data Filtering
+
+Filter based on:
+- Minimum sample frequency
+- Coefficient of variation (CV) in QC
+- Blank ratio
+- Mass error
+- Spectral similarity score
+
+## Advanced Features
+
+### Ion Mobility
+
+For LC-IMS-MS data:
+- 3D peak detection
+- CCS calculation
+- Drift time alignment
+- Enhanced separation
+
+### Imaging MS
+
+For spatial omics:
+- MALDI imaging support
+- Ion image generation
+- ROI analysis
+- Spatial statistics
+
+### Isotope Tracking
+
+Monitor labeled compounds:
+- 13C labeling
+- 15N labeling
+- 2H (deuterium) labeling
+- Flux analysis
+
+## Export Formats
+
+### Peak Tables
+
+Standard exports include:
+- Peak ID
+- m/z and RT
+- Identification
+- Sample intensities
+- Statistical information
+
+### Spectral Formats
+
+Export spectra as:
+- MSP (MS-DIAL, NIST)
+- MGF (GNPS, MassBank)
+- MAT (MATLAB)
+- Text format
+
+### Analysis Software
+
+Export for:
+- MetaboAnalyst
+- SIMCA
+- R/Python
+- Excel
+- Cytoscape (networks)
+
+## Tips and Best Practices
+
+### Project Organization
+
+1. Use descriptive project names
+2. Keep raw files in one location
+3. Document parameter settings
+4. Save project files regularly
+5. Back up important data
+
+### Processing Strategy
+
+1. Start with default parameters
+2. Optimize using QC samples
+3. Process in batches if needed
+4. Validate key identifications
+5. Document any manual curation
+
+### Performance Optimization
+
+1. Use SSD for data storage
+2. Process during off-hours
+3. Close unnecessary applications
+4. Consider batch processing
+5. Use console version for automation
+
+## Getting Help
+
+If you need assistance:
+
+1. Check this user guide
+2. Review [FAQ](../faq.qmd)
+3. Try [Tutorials](../tutorials.qmd)
+4. Watch YouTube videos
+5. Ask the community
+6. Contact MS-DIAL support
+
+## Additional Resources
+
+- **MS-DIAL Mathematics**: Detailed algorithm documentation
+- **Video Tutorials**: Visual walkthroughs
+- **Publications**: Method development papers
+- **Community Forum**: User discussions
+- **GitHub**: Bug reports and feature requests
+
+---
+
+::: {.callout-tip}
+## Quick Reference
+
+For quick access to specific topics, use the search function or navigation sidebar. Each section includes practical examples and parameter recommendations.
+:::

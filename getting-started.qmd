@@ -1,0 +1,155 @@
+---
+title: "Getting Started with MS-DIAL"
+---
+
+## Introduction
+
+This guide will help you get started with MS-DIAL for mass spectrometry data analysis. MS-DIAL is designed to be user-friendly while providing powerful features for untargeted metabolomics, lipidomics, and proteomics.
+
+## Prerequisites
+
+Before using MS-DIAL, ensure you have:
+
+1. **Operating System**: Windows 10/11 (64-bit) or Linux (via Docker)
+2. **RAM**: Minimum 8 GB (16 GB or more recommended)
+3. **Storage**: Sufficient disk space for your MS data files
+4. **MS Data**: Raw data files from supported instruments or converted to mzML/netCDF
+
+## Supported Data Types
+
+MS-DIAL supports various types of mass spectrometry data:
+
+### By Separation Method
+- **LC-MS**: Liquid chromatography mass spectrometry
+- **GC-MS**: Gas chromatography mass spectrometry
+- **LC-IMS-MS**: Ion mobility spectrometry
+- **DIMS**: Direct injection mass spectrometry
+- **Imaging MS**: MALDI imaging and spatial omics
+
+### By Acquisition Mode
+- **DDA**: Data-dependent acquisition
+- **DIA**: Data-independent acquisition (SWATH, AIF, All-ions)
+- **Targeted**: Selected ion monitoring
+
+### By Application
+- **Metabolomics**: Small molecule analysis
+- **Lipidomics**: Lipid profiling and annotation
+- **Proteomics**: Peptide and protein identification
+
+## Quick Start Workflow
+
+Here's a typical workflow for processing MS data in MS-DIAL:
+
+### 1. Create a New Project
+
+1. Launch MS-DIAL
+2. Click "New Project"
+3. Select project location
+4. Choose your MS data folder
+5. Select data file format
+
+### 2. Configure Project Settings
+
+Set up your project parameters:
+
+- **Sample Information**: Assign sample types (Sample, QC, Blank, Standard)
+- **Class ID**: Group samples by experimental conditions
+- **Batch**: If analyzing multiple batches
+- **Analytical Order**: Sequence of sample acquisition
+
+### 3. Set Measurement Parameters
+
+Configure according to your analytical setup:
+
+- **Ionization mode**: Positive or negative
+- **MS type**: MS1 only, DDA, or DIA
+- **Data type**: Centroid or profile
+- **Mass range**: m/z range of interest
+
+### 4. Peak Detection
+
+MS-DIAL will automatically:
+
+- Detect peaks in your data
+- Perform deconvolution
+- Extract mass spectra
+- Generate peak lists
+
+### 5. Compound Identification
+
+Annotate peaks using:
+
+- **MSP libraries**: Spectral matching
+- **Text libraries**: Accurate mass and RT
+- **In silico databases**: Predicted spectra
+- **User databases**: Custom compound lists
+
+### 6. Alignment
+
+Align peaks across samples:
+
+- Retention time alignment
+- m/z alignment
+- Gap filling for missing values
+
+### 7. Data Export
+
+Export results for downstream analysis:
+
+- Peak height/area tables
+- Spectral data (MSP, NIST format)
+- Statistical analysis ready formats
+
+## Example: Processing LC-MS Data
+
+Here's a basic example for LC-MS metabolomics:
+
+1. **Prepare your data**
+   - Organize raw files in a single folder
+   - Include QC samples for quality control
+
+2. **Create project**
+   - Select "LC/MS" as separation type
+   - Choose positive or negative mode
+   - Set MS1 data type
+
+3. **Set parameters**
+   - Mass range: 50-1000 m/z
+   - Retention time: 0-30 min
+   - Minimum peak height: 1000 (adjust based on your data)
+
+4. **Run processing**
+   - Peak detection
+   - Deconvolution
+   - Identification using metabolite databases
+
+5. **Review results**
+   - Check peak quality
+   - Validate identifications
+   - Export data
+
+## Next Steps
+
+- **[Installation Guide](installation.qmd)**: Detailed installation instructions
+- **[User Guide](user-guide/overview.qmd)**: Comprehensive documentation
+- **[Tutorials](tutorials.qmd)**: Step-by-step examples with real data
+
+## Common Questions
+
+::: {.callout-note}
+## Centroid vs Profile Data
+
+MS-DIAL 5 can handle both centroid and profile data. Use the **Raw Data Viewer** tool (included with MS-DIAL) to check your data type and determine appropriate parameters.
+:::
+
+::: {.callout-tip}
+## Peak Height Threshold
+
+Start with a conservative peak height threshold (e.g., 1000-5000) and adjust based on your data quality. The Raw Data Viewer can help determine appropriate values.
+:::
+
+::: {.callout-warning}
+## File Formats
+
+While MS-DIAL supports many vendor formats directly, mzML is recommended for best compatibility and reproducibility.
+:::

@@ -1,0 +1,371 @@
+---
+title: "Frequently Asked Questions"
+---
+
+## General Questions
+
+### What is MS-DIAL?
+
+MS-DIAL (Mass Spectrometry - Data Independent AnaLysis) is a comprehensive, free software for processing mass spectrometry data in metabolomics, lipidomics, and proteomics research. It supports various MS platforms and acquisition modes.
+
+### Is MS-DIAL free to use?
+
+Yes, MS-DIAL is free and open-source software. It can be used for academic and commercial purposes without licensing fees.
+
+### What's the difference between MS-DIAL 4 and MS-DIAL 5?
+
+MS-DIAL 5 offers several improvements:
+
+- New user interface with better usability
+- Direct import of vendor formats (no ABF conversion needed)
+- Multi-database annotation support
+- Enhanced proteomics capabilities
+- Support for new fragmentation methods (ECD, EIEIO, EID, OAD)
+- Better performance and stability
+
+### Can I migrate my MS-DIAL 4 projects to MS-DIAL 5?
+
+Projects are not directly compatible between versions. You will need to reprocess your raw data in MS-DIAL 5. However, you can use the same database files and parameter settings.
+
+## Installation and Setup
+
+### What are the system requirements?
+
+**Minimum:**
+- Windows 10/11 (64-bit)
+- 8 GB RAM
+- 2 GB disk space + space for data
+
+**Recommended:**
+- 16 GB+ RAM
+- Multi-core processor
+- SSD for data storage
+
+### Can I run MS-DIAL on Mac or Linux?
+
+MS-DIAL is primarily designed for Windows. For Mac/Linux users:
+- Use Docker containers (recommended)
+- Use Windows virtual machine
+- Use Wine (experimental, not officially supported)
+
+### Do I need to install additional software?
+
+MS-DIAL requires .NET Framework 4.8 or later (usually pre-installed on Windows 10/11). No other dependencies are required for basic functionality.
+
+## Data Import and Formats
+
+### What file formats does MS-DIAL support?
+
+**Vendor formats:**
+- Agilent (.d)
+- Bruker (.d)
+- LECO (.peg)
+- Sciex (.wiff)
+- Shimadzu (.lcd)
+- Thermo (.raw)
+- Waters (.raw)
+
+**Open formats:**
+- mzML
+- netCDF (AIA)
+- ABF (MS-DIAL format)
+
+### Should I convert my data to mzML?
+
+While MS-DIAL 5 can directly read vendor formats, mzML is recommended for:
+- Long-term data archiving
+- Better reproducibility
+- Compatibility with other tools
+- Sharing data with collaborators
+
+### How do I convert vendor formats to mzML?
+
+Use ProteoWizard MSConvert:
+1. Download MSConvert from ProteoWizard
+2. Load your raw files
+3. Select mzML output format
+4. Choose appropriate filters (peak picking, compression)
+5. Convert files
+
+### What's the difference between centroid and profile data?
+
+- **Profile**: Continuous m/z data points (raw detector output)
+- **Centroid**: Processed peaks with single m/z values
+
+MS-DIAL 5 can handle both, but centroid data is generally faster to process. Use Raw Data Viewer to check your data type.
+
+## Data Processing
+
+### How do I determine the right peak height threshold?
+
+Use the Raw Data Viewer tool:
+1. Load your data files
+2. View intensity distribution histograms
+3. Identify the noise level
+4. Set threshold 3-5x above noise
+5. Typical range: 1,000-10,000 for most instruments
+
+### Why am I getting too many peaks?
+
+Common causes:
+- Peak height threshold too low
+- Minimum peak width too small
+- Including noise regions
+- Mass slice width too large
+
+**Solutions:**
+- Increase minimum peak height
+- Adjust retention time range to exclude solvent regions
+- Optimize deconvolution parameters
+
+### Why am I getting too few peaks?
+
+Common causes:
+- Peak height threshold too high
+- Retention time window too narrow
+- Strict identification parameters
+
+**Solutions:**
+- Lower minimum peak height
+- Expand retention time range
+- Relax mass tolerance and RT tolerance
+
+### How long does processing take?
+
+Processing time depends on:
+- Number of samples
+- File size
+- Data type (DDA vs DIA)
+- Computer specifications
+
+**Typical times:**
+- Simple LC-MS project (20 samples): 10-30 minutes
+- Complex DIA project (100 samples): 1-3 hours
+- Large-scale studies (>500 samples): Several hours
+
+## Compound Identification
+
+### What databases should I use?
+
+**For metabolomics:**
+- MassBank
+- GNPS
+- HMDB (create custom MSP)
+- In-house standards library
+
+**For lipidomics:**
+- MS-DIAL built-in lipid database (recommended)
+- LipidBlast
+- SPLASH standards
+
+**For GC-MS:**
+- NIST library
+- Fiehn GC-MS library
+- Golm Metabolome Database
+
+### How do I create a custom MSP library?
+
+1. Acquire authentic standards
+2. Record MS/MS spectra
+3. Create MSP file following the format:
+   ```
+   NAME: Compound name
+   PRECURSORMZ: 123.456
+   PRECURSORTYPE: [M+H]+
+   RETENTIONTIME: 5.2
+   Num Peaks: 10
+   50.0234 999
+   73.0456 5432
+   ...
+   ```
+4. Import into MS-DIAL
+
+### What is post-identification?
+
+Post-identification uses accurate mass and retention time (text library) to annotate peaks after MSP-based identification. It's useful for:
+- Internal standards
+- Compounds without MS/MS spectra
+- Targeted compound lists
+
+### Why aren't my compounds being identified?
+
+Check these factors:
+- **Mass tolerance**: Too strict? Try 0.01 Da or 10 ppm
+- **RT tolerance**: Adjust if RT shifts occur
+- **Spectral similarity**: Lower threshold if needed
+- **Database**: Ensure compounds are in your library
+- **Adduct types**: Include all relevant adducts
+
+## Alignment and Normalization
+
+### What is peak alignment?
+
+Alignment combines peaks from different samples that represent the same compound, correcting for:
+- Retention time shifts
+- m/z variations
+- Missing values
+
+### Should I include blank samples in alignment?
+
+Yes! Blank samples help identify:
+- Contamination
+- Carry-over effects
+- Background signals
+
+Mark them as "Blank" type in sample information.
+
+### What's gap filling?
+
+Gap filling attempts to find peaks in samples where they were initially missed, reducing false zeros in your data matrix. It's recommended for most metabolomics studies.
+
+### How do I handle batch effects?
+
+1. Include QC samples in each batch
+2. Use MS-DIAL's batch correction features
+3. Monitor QC sample clustering in PCA
+4. Apply additional normalization in downstream analysis (e.g., ComBat)
+
+## Data Export and Analysis
+
+### What format should I export for statistical analysis?
+
+Common formats:
+- **CSV/TSV**: For R, Python, Excel
+- **SIMCA**: For multivariate analysis
+- **MetaboAnalyst**: For web-based analysis
+- **MSP**: For spectral library sharing
+
+### What's included in the peak table export?
+
+Typical columns:
+- Peak ID
+- m/z
+- Retention time
+- Compound name (if identified)
+- Adduct type
+- Sample intensities/areas
+- MS/MS spectrum reference
+
+### Can I export MS/MS spectra?
+
+Yes, export options include:
+- MSP format
+- NIST format
+- MassBank format
+- MGF format (for GNPS)
+
+## Performance and Optimization
+
+### How can I speed up processing?
+
+- Use SSD for data storage
+- Increase RAM (16+ GB)
+- Use centroid data when possible
+- Reduce retention time range to area of interest
+- Process in batches
+- Use console version for automation
+
+### MS-DIAL is using too much memory
+
+- Close other applications
+- Process fewer samples at once
+- Reduce data complexity (narrower m/z range)
+- Upgrade RAM if processing large studies
+
+### Can I run MS-DIAL on multiple cores?
+
+MS-DIAL automatically uses multiple CPU cores for parallel processing. Ensure your system has adequate cores (4+ recommended).
+
+## Troubleshooting
+
+### MS-DIAL crashes during processing
+
+Common solutions:
+- Update to latest version
+- Check Windows Event Viewer for errors
+- Verify data file integrity
+- Reduce batch size
+- Increase virtual memory
+- Reinstall .NET Framework
+
+### "Cannot open file" error
+
+- Check file permissions
+- Verify file isn't corrupted
+- Ensure sufficient disk space
+- Try copying file to local drive
+- Convert to mzML using MSConvert
+
+### Results look incorrect
+
+- Verify data type (centroid/profile)
+- Check parameter settings
+- Review peak detection with Raw Data Viewer
+- Validate with known compounds
+- Compare with manual inspection
+
+## Best Practices
+
+### Project Organization
+
+1. Keep raw files in dedicated folder
+2. Use consistent naming conventions
+3. Document parameter settings
+4. Include QC and blank samples
+5. Back up project files regularly
+
+### Quality Control
+
+1. Include pooled QC samples
+2. Monitor QC clustering in PCA
+3. Check blank samples for contamination
+4. Validate key identifications manually
+5. Document processing workflow
+
+### Data Sharing
+
+1. Export raw data to mzML
+2. Share MSP libraries used
+3. Document all parameters
+4. Include metadata
+5. Use public repositories (MetaboLights, GNPS)
+
+## Getting Help
+
+### Where can I find more information?
+
+- **User Guide**: [Comprehensive documentation](user-guide/overview.qmd)
+- **Tutorials**: [Step-by-step guides](tutorials.qmd)
+- **YouTube**: [@msdialproject channel](https://www.youtube.com/@msdialproject)
+- **Publications**: Check original MS-DIAL papers
+
+### How do I report bugs?
+
+1. Check if issue exists on GitHub
+2. Create detailed bug report including:
+   - MS-DIAL version
+   - Operating system
+   - Steps to reproduce
+   - Error messages
+   - Example data (if possible)
+
+### Can I contribute to MS-DIAL?
+
+Yes! MS-DIAL is open-source:
+- Report bugs
+- Suggest features
+- Contribute code via GitHub
+- Share databases and workflows
+- Help other users in forums
+
+---
+
+::: {.callout-note}
+## Still Have Questions?
+
+If your question isn't answered here, please:
+1. Check the [User Guide](user-guide/overview.qmd)
+2. Search the GitHub issues
+3. Ask on the community forum
+4. Contact the MS-DIAL team
+:::
