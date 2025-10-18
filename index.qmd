@@ -1,0 +1,72 @@
+---
+title: "MS-DIAL Knowledge Base"
+subtitle: "Comprehensive documentation for MS-DIAL mass spectrometry software"
+---
+
+## Welcome to the MS-DIAL Knowledge Base
+
+MS-DIAL (Mass Spectrometry Data Independent AcquisitionaL software) is a comprehensive software tool for processing and analyzing mass spectrometry data, particularly for untargeted metabolomics and lipidomics research.
+
+### What is MS-DIAL?
+
+MS-DIAL was launched as a universal program for untargeted metabolomics that supports:
+
+- **Multiple instruments**: GC/MS, GC/MS/MS, LC/MS, LC/MS/MS, LC-IMS, and imaging MS
+- **Multiple MS vendors**: Agilent, Bruker, LECO, Sciex, Shimadzu, Thermo, and Waters
+- **Common data formats**: netCDF (AIA), mzML, and vendor-specific formats
+
+### Key Features
+
+::: {.callout-note}
+## Main Capabilities
+
+- **Multi-omics support**: Metabolomics, lipidomics, and proteomics
+- **Advanced algorithms**: Peak picking, deconvolution, and compound identification
+- **Multiple acquisition modes**: DDA, DIA (SWATH/AIF), and targeted analysis
+- **Comprehensive databases**: Built-in spectral libraries for metabolites and lipids
+- **Ion mobility support**: Integration with LC-IMS-MS data
+- **Imaging MS**: Support for MALDI imaging and other spatial omics
+:::
+
+### Getting Started
+
+New to MS-DIAL? Start with these resources:
+
+1. **[Getting Started](getting-started.qmd)** - Quick introduction to MS-DIAL
+2. **[Installation](installation.qmd)** - Download and install MS-DIAL
+3. **[Tutorials](tutorials.qmd)** - Step-by-step guides and examples
+
+### Latest Version
+
+MS-DIAL 5 introduces significant improvements over version 4:
+
+- New graphical user interface
+- Direct import of vendor formats (no conversion required)
+- Multi-database annotation support
+- Enhanced proteomics capabilities
+- Support for new fragmentation methods (ECD, EIEIO, EID, OAD)
+
+### Community and Support
+
+- **Official Website**: [http://prime.psc.riken.jp/compms/msdial/main.html](http://prime.psc.riken.jp/compms/msdial/main.html)
+- **YouTube Channel**: [@msdialproject](https://www.youtube.com/@msdialproject)
+- **GitHub Repository**: [systemsomicslab/MsdialWorkbench](https://github.com/systemsomicslab/MsdialWorkbench)
+- **Twitter**: [@msdial_project](https://twitter.com/msdial_project)
+
+### Citations
+
+If you use MS-DIAL in your research, please cite:
+
+> Tsugawa H., et al. (2015) MS-DIAL: data-independent MS/MS deconvolution for comprehensive metabolome analysis. *Nature Methods*, 12(6), 523-526.
+
+> Tsugawa H., et al. (2020) A lipidome atlas in MS-DIAL 4. *Nature Biotechnology*, 38(10), 1159-1163.
+
+---
+
+::: {.callout-tip}
+## Quick Links
+
+- [User Guide](user-guide/overview.qmd) - Comprehensive documentation
+- [FAQ](faq.qmd) - Frequently asked questions
+- [About](about.qmd) - Project information and credits
+:::

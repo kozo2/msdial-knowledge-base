@@ -1,0 +1,221 @@
+---
+title: "Tutorials"
+---
+
+## Available Tutorials
+
+This section provides step-by-step tutorials for common MS-DIAL workflows using real-world examples.
+
+## Getting Started Tutorials
+
+### Tutorial 1: Basic LC-MS Metabolomics
+
+Learn the fundamentals of processing LC-MS metabolomics data:
+
+- Import raw data files
+- Set up project parameters
+- Perform peak detection and deconvolution
+- Identify compounds using MSP libraries
+- Export results for statistical analysis
+
+**Data**: Download example LC-MS data from the MS-DIAL website  
+**Time**: ~30 minutes  
+**Difficulty**: Beginner
+
+### Tutorial 2: GC-MS Metabolomics with Retention Index
+
+Process GC-MS data using retention index for compound identification:
+
+- Set up GC-MS project
+- Configure retention index calculation (FAME or Alkane)
+- Use EI-MS spectral libraries
+- Perform compound identification
+- Export annotated peak table
+
+**Data**: Public GC-MS metabolomics dataset  
+**Time**: ~45 minutes  
+**Difficulty**: Beginner
+
+## Advanced Tutorials
+
+### Tutorial 3: LC-MS/MS Lipidomics (DDA)
+
+Comprehensive lipidomics workflow:
+
+- Configure DDA project for lipidomics
+- Use MS-DIAL's built-in lipid databases
+- Perform lipid class annotation
+- Identify lipid species with acyl chain information
+- Export comprehensive lipid table
+
+**Data**: Lipidomics standard sample data  
+**Time**: ~1 hour  
+**Difficulty**: Intermediate
+
+### Tutorial 4: Data-Independent Acquisition (DIA/SWATH)
+
+Process DIA data for metabolomics:
+
+- Import DIA/SWATH data
+- Configure deconvolution parameters
+- Perform spectral deconvolution
+- Library matching with MSP files
+- Quality control and data filtering
+
+**Data**: SWATH-MS metabolomics data  
+**Time**: ~1 hour  
+**Difficulty**: Intermediate
+
+### Tutorial 5: Ion Mobility MS (LC-IMS-MS)
+
+Work with ion mobility data:
+
+- Import LC-IMS-MS data
+- Configure drift time parameters
+- 3D peak detection (RT, m/z, drift time)
+- CCS (collision cross-section) calculation
+- Advanced visualization
+
+**Data**: LC-IMS-MS lipidomics data  
+**Time**: ~1.5 hours  
+**Difficulty**: Advanced
+
+## Specialized Workflows
+
+### Tutorial 6: MALDI Imaging MS
+
+Process imaging mass spectrometry data:
+
+- Import MALDI imaging data
+- Configure spatial parameters
+- Peak detection for imaging
+- Ion image generation
+- Export spatial data
+
+**Data**: MALDI imaging sample  
+**Time**: ~1 hour  
+**Difficulty**: Advanced
+
+### Tutorial 7: Multi-Batch Processing
+
+Handle multiple analytical batches:
+
+- Design multi-batch experiments
+- Configure batch correction
+- Quality control with QC samples
+- Batch effect evaluation
+- Normalized data export
+
+**Data**: Multi-batch metabolomics dataset  
+**Time**: ~45 minutes  
+**Difficulty**: Intermediate
+
+## Specialized Topics
+
+### Parameter Optimization
+
+#### Determining Optimal Peak Height Threshold
+
+Learn how to use Raw Data Viewer to:
+- Analyze intensity distributions
+- Determine signal-to-noise ratios
+- Set appropriate peak height thresholds
+- Optimize sensitivity vs. specificity
+
+#### Mass Accuracy and Resolution
+
+Configure mass tolerance parameters:
+- Understanding your instrument's mass accuracy
+- Setting appropriate MS1 and MS2 tolerances
+- Centroid vs. profile data handling
+
+### Database Management
+
+#### Creating Custom MSP Libraries
+
+Build your own spectral libraries:
+- MSP file format specifications
+- Adding retention time information
+- Including adduct types
+- Validation and testing
+
+#### Using Text Libraries
+
+Create simple RT and accurate mass libraries:
+- Format requirements
+- Integration with MSP libraries
+- Post-identification workflow
+
+## Video Tutorials
+
+The MS-DIAL team provides video tutorials on YouTube:
+
+- **Channel**: [@msdialproject](https://www.youtube.com/@msdialproject)
+- **Topics**: Installation, basic workflows, advanced features
+- **Language**: English and Japanese
+
+### Recommended Videos
+
+1. **Getting Started with MS-DIAL 5** - Introduction to the new interface
+2. **Raw Data Viewer Tutorial** - Understanding your data
+3. **Metabolomics Workflow** - End-to-end processing
+4. **Lipidomics Analysis** - Comprehensive lipid annotation
+5. **Advanced Features** - Tips and tricks for power users
+
+## Practice Datasets
+
+### Where to Find Data
+
+1. **MS-DIAL Website**: Curated example datasets
+2. **MetaboLights**: Public metabolomics repository
+3. **MassIVE**: UCSD mass spectrometry repository
+4. **GNPS**: Global Natural Products Social Molecular Networking
+
+### Recommended Datasets for Learning
+
+- **LC-MS Metabolomics**: MTBLS263 (Plasma metabolomics)
+- **Lipidomics**: MTBLS174 (Cell lipid extracts)
+- **GC-MS**: Fiehn lab example data
+- **DIA**: SWATH metabolomics benchmark data
+
+## Community Resources
+
+### Forums and Discussion
+
+- MS-DIAL user forum
+- ResearchGate discussions
+- Twitter: #MSDIAL
+
+### Publications Using MS-DIAL
+
+Review published workflows:
+- Nature Protocols papers
+- Analytical chemistry methods
+- Application notes
+
+## Need Help?
+
+If you're stuck on a tutorial:
+
+1. Check the [FAQ](faq.qmd) section
+2. Review the [User Guide](user-guide/overview.qmd)
+3. Watch related video tutorials
+4. Ask on the community forum
+5. Contact MS-DIAL support
+
+## Contributing Tutorials
+
+Have a great workflow to share?
+
+- Submit tutorials via GitHub
+- Share video walkthroughs
+- Contribute example datasets
+- Write application notes
+
+---
+
+::: {.callout-tip}
+## Pro Tip
+
+Start with the basic tutorials even if you're experienced. MS-DIAL 5 has many new features compared to version 4!
+:::

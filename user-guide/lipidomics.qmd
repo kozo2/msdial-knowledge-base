@@ -1,0 +1,439 @@
+---
+title: "Lipidomics Workflows"
+---
+
+## Overview
+
+MS-DIAL provides comprehensive support for lipidomics analysis, including specialized databases, lipid class annotation, and acyl chain identification. This section covers lipidomics-specific workflows.
+
+## Introduction to Lipidomics in MS-DIAL
+
+### Key Features
+
+MS-DIAL 4 and 5 include:
+- **Built-in lipid databases**: >360,000 lipid structures
+- **LipidBlast integration**: Comprehensive MS/MS library
+- **Automated lipid class assignment**: Based on MS/MS patterns
+- **Acyl chain identification**: Fatty acid composition
+- **Lipid nomenclature**: LIPID MAPS standard
+- **In silico MS/MS prediction**: For lipid species
+
+### Lipid Classes Supported
+
+**Glycerolipids:**
+- MG (Monoacylglycerol)
+- DG (Diacylglycerol)
+- TG (Triacylglycerol)
+
+**Glycerophospholipids:**
+- PC (Phosphatidylcholine)
+- PE (Phosphatidylethanolamine)
+- PS (Phosphatidylserine)
+- PG (Phosphatidylglycerol)
+- PI (Phosphatidylinositol)
+- PA (Phosphatidic acid)
+- Lyso variants (LPC, LPE, LPS, LPG, LPI, LPA)
+
+**Sphingolipids:**
+- Cer (Ceramide)
+- SM (Sphingomyelin)
+- HexCer (Hexosylceramide)
+- CerP (Ceramide phosphate)
+- Sph (Sphingosine)
+- S1P (Sphingosine-1-phosphate)
+
+**Sterol Lipids:**
+- CE (Cholesteryl ester)
+- Cholesterol
+- Bile acids
+
+**Additional Classes:**
+- Cardiolipin
+- Oxidized lipids
+- Ether lipids (plasmalogens)
+
+## Project Setup
+
+### Ionization Mode Selection
+
+**Positive Mode:**
+- PC, SM, PE (as [M+H]+)
+- Lysophospholipids
+- Sphingolipids
+- Cholesteryl esters
+
+**Negative Mode:**
+- PE, PS, PI, PG, PA
+- Fatty acids
+- Bile acids
+- Cardiolipins
+
+**Recommendation:**
+- Analyze in **both modes** for comprehensive coverage
+- Process separately and combine results
+
+### Recommended Settings
+
+**Data Acquisition:**
+- **DDA**: Good for targeted lipidomics
+- **DIA/SWATH**: Better for comprehensive profiling
+- Collision energy: Optimized for lipid classes
+
+**MS-DIAL Configuration:**
+- Separation: LC/MS
+- MS type: DDA or DIA
+- Data type: Centroid
+- Ionization: Positive or Negative
+
+## Database Setup
+
+### MS-DIAL Built-in Databases
+
+MS-DIAL includes extensive lipid databases:
+
+**Positive Ion Mode:**
+- LipidBlast +ESI database
+- In silico lipid MS/MS (positive)
+- Odd-chain lipids
+- Ether lipids
+
+**Negative Ion Mode:**
+- LipidBlast -ESI database
+- In silico lipid MS/MS (negative)
+- Fatty acid database
+
+**Activation:**
+1. In project setup, navigate to "Identification"
+2. Select "Lipid" from database type
+3. Choose appropriate ion mode
+4. Enable acyl chain detection if needed
+
+### Custom Lipid Libraries
+
+You can add custom lipid standards:
+
+**MSP Format Example:**
+```
+NAME: PC 16:0_18:1
+PRECURSORMZ: 760.5851
+PRECURSORTYPE: [M+H]+
+RETENTIONTIME: 15.2
+LIPIDCLASS: PC
+LIPIDCHAIN: 16:0/18:1
+FORMULA: C42H82NO8P
+Num Peaks: 8
+184.0733 999
+478.3276 250
+496.3382 350
+502.3432 180
+520.3538 200
+524.3725 320
+```
+
+## Lipid Annotation Workflow
+
+### Level of Lipid Identification
+
+**Class Level:**
+- Lipid class identified (e.g., PC)
+- Total carbon and unsaturation known
+- Example: PC 34:1
+
+**Species Level:**
+- Individual acyl chains identified
+- Position unknown
+- Example: PC 16:0_18:1
+
+**Molecular Level:**
+- Complete structure including position
+- Requires additional experiments
+- Example: PC 16:0/18:1 (sn-1/sn-2)
+
+### Annotation Parameters
+
+**MS1 Parameters:**
+- Mass tolerance: 0.01 Da or 5 ppm
+- Retention time tolerance: 2.5 min (or not used)
+- Adduct types: Enable all relevant
+
+**MS2 Parameters:**
+- Mass tolerance: 0.05 Da or 20 ppm
+- Minimum spectral similarity: 70%
+- Use product ion library: Yes
+
+### Lipid-Specific Adducts
+
+**Positive Mode:**
+- [M+H]+
+- [M+NH4]+
+- [M+Na]+
+- [M+K]+
+- [M-H2O+H]+
+
+**Negative Mode:**
+- [M-H]-
+- [M+FA-H]- (formate)
+- [M+Hac-H]- (acetate)
+- [M+Cl]-
+
+## Processing Parameters
+
+### Peak Detection
+
+**Recommended Settings:**
+- Minimum peak height: 1,000-5,000
+- Mass slice width: 0.1 Da
+- Minimum peak width: 5 scans
+- Smoothing level: 3
+
+**Lipid-Specific Considerations:**
+- Lower thresholds for low-abundance lipids
+- Consider isotope patterns for TGs
+- Multiple charge states (z=1,2)
+
+### Deconvolution
+
+**Settings:**
+- Sigma window: 0.7 (wider than metabolomics)
+- MS/MS abundance cutoff: 1-5%
+- Exclude after precursor: No (important for lipids!)
+- Keep original precursor: Yes
+
+::: {.callout-warning}
+## Important for Lipidomics
+
+Do NOT exclude ions after precursor in lipidomics! Many diagnostic ions appear at higher m/z than the precursor (e.g., [M-H2O+H]+ in-source fragments).
+:::
+
+### Alignment
+
+**Parameters:**
+- RT tolerance: 0.1 min
+- Mass tolerance: 0.015 Da
+- Gap filling: Enabled
+- Peak count filter: 50% of samples
+
+## Lipid Identification
+
+### Acyl Chain Determination
+
+MS-DIAL can identify acyl chains based on diagnostic ions:
+
+**Phosphatidylcholines (PC) - Positive Mode:**
+- Loss of headgroup: -183 Da
+- Acyl chain neutral losses
+- Lyso-PC ions
+
+**Phosphatidylethanolamines (PE) - Negative Mode:**
+- Fatty acid carboxylate ions
+- [M-H-R'COOH]- fragments
+- Specific for each acyl chain
+
+**Example - PE 16:0/18:1 Analysis:**
+1. Precursor [M-H]- at m/z 716.5
+2. Fragment at m/z 255.2 (16:0 FA)
+3. Fragment at m/z 281.2 (18:1 FA)
+4. Annotation: PE 16:0_18:1
+
+### Quality Scoring
+
+**Identification Confidence:**
+- **Total score**: Combined metrics
+- **Dot product**: Spectral similarity
+- **Reverse dot product**: Library coverage
+- **Presence score**: Diagnostic ion presence
+
+**Thresholds:**
+- High confidence: Total score >80
+- Medium confidence: 70-80
+- Low confidence: 60-70
+
+## Quality Control
+
+### Lipid-Specific QC
+
+**Check These Items:**
+1. Phospholipid RT order (by chain length)
+2. Isotope pattern quality
+3. In-source fragmentation
+4. Adduct formation patterns
+5. Class-specific retention patterns
+
+### Internal Standards
+
+**SPLASH LIPIDOMIX:**
+- Covers major lipid classes
+- Deuterated or odd-chain
+- Quantitative normalization
+
+**Standard Addition:**
+- Class-specific standards
+- Concentration-response curves
+- Matrix effects evaluation
+
+### QC Samples
+
+**Pooled Biological QC:**
+- Representative of study samples
+- Monitor throughout run
+- Evaluate reproducibility
+
+**Commercial QC:**
+- Standard reference materials
+- NIST SRM 1950 (human plasma)
+- Inter-laboratory comparison
+
+## Data Export and Analysis
+
+### Export Options
+
+**Peak Table:**
+- Lipid class and species
+- Acyl chain composition
+- Retention time
+- MS/MS score
+- Sample intensities
+
+**Spectral Data:**
+- MSP format for libraries
+- MGF for molecular networking
+- Individual spectra for validation
+
+### Lipid Nomenclature
+
+MS-DIAL follows LIPID MAPS nomenclature:
+
+**Separator Symbols:**
+- **/** : sn-position known (e.g., PC 16:0/18:1)
+- **_** : position unknown (e.g., PC 16:0_18:1)
+- **|** : plasmalogen or ether linkage
+- **;** : additional modification
+
+**Examples:**
+- PC 34:1 (class level)
+- PC 16:0_18:1 (species level)
+- PC 16:0/18:1 (molecular level)
+- PE O-16:0_20:4 (ether PE)
+
+### Downstream Analysis
+
+**Lipid Class Composition:**
+- Relative abundance
+- Class distribution
+- Saturation profiles
+
+**Statistical Analysis:**
+- Multivariate analysis (PCA, PLS-DA)
+- Differential expression
+- Pathway enrichment
+
+**Visualization:**
+- Lipid heatmaps
+- Chain length distributions
+- Saturation degree plots
+- Volcano plots
+
+## Advanced Lipidomics
+
+### Oxidized Lipids
+
+**Challenges:**
+- Low abundance
+- Isomeric complexity
+- Limited reference standards
+
+**Strategies:**
+- Targeted extraction
+- Higher sensitivity methods
+- Multiple reaction monitoring
+
+### Ether Lipids (Plasmalogens)
+
+**Identification:**
+- Specific neutral losses
+- Diagnostic fragment ions
+- RT differences from diacyl forms
+
+**MS-DIAL Support:**
+- Ether lipid databases
+- Plasmalogen-specific rules
+- Automated annotation
+
+### Sphingolipids
+
+**Complexity:**
+- Multiple sphingoid bases
+- Varied headgroups
+- Hydroxylation patterns
+
+**MS-DIAL Features:**
+- Sphingolipid database
+- Ceramide subclass annotation
+- Long-chain base identification
+
+## Troubleshooting
+
+### Low Identification Rate
+
+**Solutions:**
+- Check lipid database is enabled
+- Verify adduct types
+- Adjust MS/MS tolerance
+- Enable in silico lipid prediction
+- Consider matrix effects
+
+### Incorrect Lipid Class
+
+**Solutions:**
+- Review MS/MS spectrum manually
+- Check for in-source fragmentation
+- Verify collision energy
+- Compare with authentic standards
+
+### Missing Acyl Chain Information
+
+**Solutions:**
+- Increase collision energy
+- Check MS/MS abundance cutoff
+- Verify fragment ion database
+- Consider DDA instead of DIA
+
+## Best Practices
+
+### Sample Preparation
+
+1. Use appropriate extraction (e.g., Bligh-Dyer, MTBE)
+2. Include internal standards early
+3. Minimize oxidation (work quickly, use antioxidants)
+4. Store extracts properly (-80°C, inert atmosphere)
+
+### Chromatography
+
+1. Use C18 or C8 columns for reversed phase
+2. HILIC for polar lipids
+3. Optimize gradient for lipid separation
+4. Consider temperature effects
+
+### Data Acquisition
+
+1. Both positive and negative modes
+2. Optimize collision energy per class
+3. Sufficient MS/MS coverage (DIA recommended)
+4. High mass resolution (≥30,000)
+
+### Data Processing
+
+1. Use lipid-specific parameters
+2. Enable acyl chain detection
+3. Manual validation of key lipids
+4. Cross-reference with databases
+
+---
+
+::: {.callout-tip}
+## Lipidomics Resources
+
+- **LIPID MAPS**: [https://www.lipidmaps.org](https://www.lipidmaps.org)
+- **LipidBlast**: Integrated in MS-DIAL
+- **MS-DIAL Lipidome Atlas**: Published in Nature Biotechnology (2020)
+:::

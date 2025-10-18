@@ -1,0 +1,232 @@
+---
+title: "About MS-DIAL"
+---
+
+## Project Overview
+
+MS-DIAL (Mass Spectrometry Data Independent AcquisitionaL software) is a comprehensive, free software for processing mass spectrometry data in metabolomics, lipidomics, and proteomics research.
+
+### Mission
+
+To provide the research community with a universal, user-friendly, and powerful tool for untargeted omics data analysis that supports multiple instruments, vendors, and analytical approaches.
+
+## Development Team
+
+MS-DIAL is developed and maintained by:
+
+**RIKEN Center for Sustainable Resource Science (CSRS)**
+- Systems Omics Laboratory
+- Yokohama, Japan
+
+### Principal Investigator
+
+**Hiroshi Tsugawa, Ph.D.**
+- Team Leader, RIKEN CSRS
+- Project lead and main developer
+
+### Contributors
+
+The MS-DIAL project has benefited from contributions by numerous researchers, developers, and the global metabolomics community.
+
+## History and Versions
+
+### MS-DIAL 1.0 (2015)
+- Initial release
+- Focus on LC-MS/MS metabolomics
+- DIA data processing
+
+### MS-DIAL 2.0 (2016)
+- Added GC-MS support
+- Improved peak detection algorithms
+- Enhanced spectral libraries
+
+### MS-DIAL 3.0 (2018)
+- Ion mobility support
+- Imaging MS capabilities
+- Multi-platform support
+
+### MS-DIAL 4.0 (2020)
+- Comprehensive lipidomics support
+- In silico lipid databases
+- LipidBlast integration
+- Improved GUI
+
+### MS-DIAL 5.0 (2022-Present)
+- Major GUI overhaul
+- Direct vendor format import
+- Multi-database annotation
+- Proteomics support
+- Advanced fragmentation methods
+- Enhanced performance
+
+## Key Publications
+
+If you use MS-DIAL in your research, please cite the appropriate papers:
+
+### Core MS-DIAL Software
+
+> Tsugawa H., Cajka T., Kind T., Ma Y., Higgins B., Ikeda K., Kanazawa M., VanderGheynst J., Fiehn O., Arita M. (2015)  
+> **MS-DIAL: data-independent MS/MS deconvolution for comprehensive metabolome analysis**  
+> *Nature Methods*, 12(6), 523-526.  
+> [DOI: 10.1038/nmeth.3393](https://doi.org/10.1038/nmeth.3393)
+
+### Lipidomics in MS-DIAL 4
+
+> Tsugawa H., Ikeda K., Takahashi M., Satoh A., Mori Y., Uchino H., Okahashi N., Yamada Y., Tada I., Bonini P., Higashi Y., Okazaki Y., Zhou Z., Zhu Z.J., Koelmel J., Cajka T., Fiehn O., Saito K., Arita M., Arita M. (2020)  
+> **A lipidome atlas in MS-DIAL 4**  
+> *Nature Biotechnology*, 38(10), 1159-1163.  
+> [DOI: 10.1038/s41587-020-0531-2](https://doi.org/10.1038/s41587-020-0531-2)
+
+### Ion Mobility MS
+
+> Tsugawa H., Ikeda K., Arita M. (2017)  
+> **The importance of bioinformatics for untargeted lipidomics**  
+> *Biochimica et Biophysica Acta (BBA) - Molecular and Cell Biology of Lipids*, 1862(8), 762-765.
+
+### Additional References
+
+Check the MS-DIAL website for complete publication list and application notes.
+
+## Technology and Algorithms
+
+MS-DIAL implements advanced algorithms for:
+
+### Peak Detection
+- Smoothing and baseline correction
+- Peak picking in multiple dimensions
+- Deconvolution of overlapping peaks
+
+### Compound Identification
+- Spectral similarity scoring
+- Accurate mass matching
+- Retention time/index alignment
+- In silico fragmentation prediction
+
+### Data Processing
+- Multi-sample alignment
+- Gap filling
+- Normalization methods
+- Statistical analysis (PCA)
+
+### Databases
+- MSP format spectral libraries
+- In silico lipid databases
+- Retention index libraries
+- Custom database support
+
+## Open Source and Community
+
+### License
+
+MS-DIAL is released under a permissive open-source license, allowing free use for academic and commercial purposes.
+
+### Source Code
+
+- **GitHub**: [systemsomicslab/MsdialWorkbench](https://github.com/systemsomicslab/MsdialWorkbench)
+- **Language**: C#
+- **Contributions**: Welcome via pull requests
+
+### Community Contributions
+
+The MS-DIAL community has contributed:
+- Spectral libraries
+- Method development
+- Bug reports and fixes
+- Documentation and tutorials
+- Application notes
+
+## Supported By
+
+MS-DIAL development has been supported by:
+- RIKEN Center for Sustainable Resource Science
+- Japan Society for the Promotion of Science (JSPS)
+- Various research grants and collaborations
+
+## Collaborations
+
+MS-DIAL is used in collaboration with:
+- Academic institutions worldwide
+- Pharmaceutical companies
+- Government research laboratories
+- Metabolomics consortia (e.g., Metabolomics Society)
+
+## Standards and Formats
+
+MS-DIAL supports community standards:
+- mzML (Proteomics Standards Initiative)
+- MSP spectral format
+- IUPAC lipid nomenclature
+- MassBank spectral format
+- GNPS molecular networking
+
+## Impact
+
+MS-DIAL has been:
+- Cited in over 1000+ publications
+- Used in metabolomics, lipidomics, and proteomics studies worldwide
+- Integrated into various data analysis workflows
+- Featured in methods papers and protocols
+
+## Resources
+
+### Official Channels
+
+- **Website**: [http://prime.psc.riken.jp/compms/msdial/main.html](http://prime.psc.riken.jp/compms/msdial/main.html)
+- **GitHub**: [systemsomicslab/MsdialWorkbench](https://github.com/systemsomicslab/MsdialWorkbench)
+- **YouTube**: [@msdialproject](https://www.youtube.com/@msdialproject)
+- **Twitter**: [@msdial_project](https://twitter.com/msdial_project)
+
+### Related Projects
+
+- **MS-FINDER**: Structure elucidation tool
+- **MRMPROBS**: Targeted metabolomics
+- **MSFLO**: Fragment linkage optimization
+
+## Contact
+
+For questions, suggestions, or collaboration:
+
+- **GitHub Issues**: Report bugs and feature requests
+- **Email**: Check the MS-DIAL website for contact information
+- **Twitter**: Follow [@msdial_project](https://twitter.com/msdial_project) for updates
+
+## Acknowledgments
+
+We thank:
+- All MS-DIAL users for feedback and suggestions
+- Contributors to spectral libraries and databases
+- Collaborating institutions and researchers
+- The metabolomics and mass spectrometry community
+
+## Future Directions
+
+Ongoing development includes:
+- Enhanced machine learning integration
+- Expanded database coverage
+- Improved visualization tools
+- Cloud-based processing options
+- Integration with other omics tools
+
+---
+
+::: {.callout-note}
+## Get Involved
+
+MS-DIAL is community-driven software. Your feedback, contributions, and collaboration are valuable!
+
+- Report bugs on GitHub
+- Share your workflows and methods
+- Contribute to documentation
+- Help other users
+- Cite MS-DIAL in your publications
+:::
+
+## Version Information
+
+**Current Version**: MS-DIAL 5.x  
+**Last Updated**: 2024  
+**Maintained By**: RIKEN CSRS Systems Omics Laboratory
+
+---
+
+*This knowledge base is a community resource for MS-DIAL users. For official documentation, visit the MS-DIAL website.*

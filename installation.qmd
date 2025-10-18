@@ -1,0 +1,188 @@
+---
+title: "Installation Guide"
+---
+
+## System Requirements
+
+### Windows
+
+- **Operating System**: Windows 10 or Windows 11 (64-bit)
+- **RAM**: 8 GB minimum, 16 GB or more recommended
+- **Storage**: 2 GB for software + space for data files
+- **Processor**: Multi-core processor recommended for faster processing
+- **.NET Framework**: Version 4.8 or later (usually pre-installed)
+
+### Linux
+
+MS-DIAL can be run on Linux using:
+- Docker containers
+- Wine (experimental)
+- Virtual machine with Windows
+
+## Installing MS-DIAL on Windows
+
+### Step 1: Download MS-DIAL
+
+1. Visit the official MS-DIAL website: [http://prime.psc.riken.jp/compms/msdial/main.html](http://prime.psc.riken.jp/compms/msdial/main.html)
+2. Navigate to the Download section
+3. Download the latest version (MS-DIAL 5.x)
+4. Choose the appropriate installer:
+   - Standard version for general use
+   - Console version for command-line/batch processing
+
+### Step 2: Install the Software
+
+1. Locate the downloaded installer file (e.g., `MsdialSetup.exe`)
+2. Double-click to run the installer
+3. Follow the installation wizard:
+   - Accept the license agreement
+   - Choose installation directory (default: `C:\Program Files\MSDIAL`)
+   - Select components to install
+4. Click "Install" and wait for completion
+5. Click "Finish" when installation is complete
+
+### Step 3: First Launch
+
+1. Launch MS-DIAL from the Start Menu or desktop shortcut
+2. The application will perform initial setup
+3. You should see the MS-DIAL main window
+
+## Installing Required Databases
+
+MS-DIAL uses spectral libraries for compound identification. Download starter kits:
+
+### Metabolomics Databases
+
+1. Visit the MS-DIAL download page
+2. Download MSP files for:
+   - **MassBank**: Public metabolite spectra
+   - **GNPS**: Community-contributed spectra
+   - **In-house databases**: Lab-specific compounds
+
+### Lipidomics Databases
+
+MS-DIAL includes built-in lipidomics databases:
+- LipidBlast
+- In silico lipid MS/MS database
+- SPLASH lipid standards
+
+### GC-MS Databases
+
+For GC-MS analysis:
+- EI-MS spectral library
+- Kovats/Fiehn retention index libraries
+- FAME/Alkane retention time dictionaries
+
+## Installing on Linux (Docker)
+
+### Prerequisites
+
+- Docker installed on your system
+- X11 forwarding for GUI (or use VNC)
+
+### Installation Steps
+
+```bash
+# Pull MS-DIAL Docker image
+docker pull systemsomicslab/msdial:latest
+
+# Run MS-DIAL container with X11 forwarding
+docker run -it \
+  -e DISPLAY=$DISPLAY \
+  -v /tmp/.X11-unix:/tmp/.X11-unix \
+  -v /path/to/your/data:/data \
+  systemsomicslab/msdial:latest
+```
+
+## Verifying Installation
+
+### Check Version
+
+1. Open MS-DIAL
+2. Go to **Help** > **About MS-DIAL**
+3. Verify the version number
+
+### Test with Sample Data
+
+1. Download sample data from the MS-DIAL website
+2. Create a test project
+3. Import sample files
+4. Run basic processing to ensure everything works
+
+## Additional Tools
+
+MS-DIAL includes several utility tools:
+
+### Raw Data Viewer
+
+- **Location**: MS-DIAL installation folder
+- **File**: `RawDataViewer.exe`
+- **Purpose**: Inspect raw MS data, check data type (centroid/profile), and estimate parameters
+
+### Console Version
+
+For batch processing and automation:
+
+1. Download the console version separately
+2. Install to a different directory
+3. Use command-line parameters for automated workflows
+
+## Updating MS-DIAL
+
+### Checking for Updates
+
+1. Visit the MS-DIAL website regularly
+2. Check the changelog for new features
+3. Download the latest version
+
+### Performing Updates
+
+1. Close MS-DIAL if running
+2. Download the new installer
+3. Run the installer (it will update the existing installation)
+4. Your projects and settings are preserved
+
+::: {.callout-note}
+## Backward Compatibility
+
+MS-DIAL 5 projects are not directly compatible with MS-DIAL 4. If you have existing MS-DIAL 4 projects, you may need to reprocess your data in MS-DIAL 5.
+:::
+
+## Troubleshooting Installation
+
+### Common Issues
+
+**Issue: "Installation failed" error**
+- Solution: Run installer as Administrator
+- Ensure sufficient disk space
+- Check .NET Framework version
+
+**Issue: MS-DIAL won't start**
+- Solution: 
+  - Check Windows Event Viewer for errors
+  - Reinstall .NET Framework
+  - Try compatibility mode
+
+**Issue: Cannot load vendor files**
+- Solution:
+  - Install vendor-specific file readers (if required)
+  - Convert data to mzML using MSConvert
+  - Check file permissions
+
+### Getting Help
+
+If you encounter issues:
+
+1. Check the [FAQ](faq.qmd) section
+2. Visit the MS-DIAL forum/discussion board
+3. Contact the MS-DIAL support team
+4. Check GitHub issues for known problems
+
+## Next Steps
+
+After installation:
+
+- Read the [Getting Started Guide](getting-started.qmd)
+- Explore the [User Guide](user-guide/overview.qmd)
+- Try the [Tutorials](tutorials.qmd) with example data
+- Configure your [database libraries](user-guide/overview.qmd#databases)

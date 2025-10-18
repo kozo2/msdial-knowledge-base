@@ -1,0 +1,15 @@
+/* Custom styles for MS-DIAL Knowledge Base */
+
+.quarto-title-block {
+  margin-bottom: 2em;
+}
+
+code {
+  background-color: #f5f5f5;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.callout {
+  margin: 1em 0;
+}

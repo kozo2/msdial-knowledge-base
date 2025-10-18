@@ -1,0 +1,385 @@
+---
+title: "Data Processing Workflow"
+---
+
+## Overview
+
+This section covers the complete data processing workflow in MS-DIAL, from project creation through data export. Understanding each step ensures high-quality results.
+
+## Step 1: Project Creation
+
+### Creating a New Project
+
+1. Launch MS-DIAL
+2. Click **File** > **New Project**
+3. Select project type:
+   - LC/MS (Liquid Chromatography)
+   - GC/MS (Gas Chromatography)
+   - Imaging MS
+   - LC-IMS/MS (Ion Mobility)
+
+4. Choose project location
+5. Click **Next**
+
+### Importing Data Files
+
+1. Browse to raw data folder
+2. Select file format from dropdown:
+   - Agilent .d
+   - Thermo .raw
+   - Waters .raw
+   - mzML
+   - Other supported formats
+
+3. Select files to import
+4. Click **Open**
+
+### Sample Information
+
+Configure metadata for each file:
+
+**Sample Type:**
+- **Sample**: Experimental samples
+- **QC**: Quality control (pooled samples)
+- **Blank**: Solvent blanks
+- **Standard**: Authentic standards
+
+**Additional Information:**
+- **Class ID**: Experimental groups (e.g., Control, Treatment)
+- **Batch**: Analytical batch number
+- **Order**: Injection sequence
+- **Dilution**: Dilution factor if applicable
+
+::: {.callout-tip}
+## Organization Tip
+
+Use consistent naming conventions for sample files. Include key information like sample type, replicate number, and batch in filenames.
+:::
+
+## Step 2: Measurement Parameters
+
+### Data Type
+
+**Centroid or Profile:**
+- Most modern instruments produce centroid data
+- Use Raw Data Viewer to verify
+- MS-DIAL 5 can convert profile to centroid automatically
+
+**Ionization Mode:**
+- Positive: [M+H]+ and related adducts
+- Negative: [M-H]- and related adducts
+- Choose based on target compounds
+
+**MS/MS Type:**
+- DDA (Data-Dependent Acquisition)
+- DIA (All-ions, SWATH, MSE)
+- None (MS1 only)
+
+### Data Collection Parameters
+
+**MS1 Settings:**
+- Mass range start (Da): e.g., 50
+- Mass range end (Da): e.g., 1000
+- Spectral accuracy: Centroid or Profile
+
+**MS2 Settings (if applicable):**
+- Acquisition type: DDA or DIA
+- Collision energy: Fixed or multiple
+- Mass range: Often narrower than MS1
+
+### Retention Time
+
+**RT Range:**
+- Start (min): Exclude solvent front
+- End (min): Exclude column washing
+- Typical: 1.0 - 25.0 min for metabolomics
+
+## Step 3: Peak Detection
+
+### Peak Detection Parameters
+
+**Peak Detection:**
+- **Minimum peak height**: 1,000 - 10,000 (instrument dependent)
+- **Minimum peak width**: 5 - 20 scans (typical: 5)
+- **Mass slice width**: 0.1 Da or 0.05 Da
+- **Smoothing method**: Linear weighted moving average
+- **Smoothing level**: 1-5 (typical: 3)
+
+::: {.callout-note}
+## Parameter Selection
+
+Use Raw Data Viewer to determine optimal peak height threshold. Look for the transition point between signal and noise in the intensity distribution.
+:::
+
+**Baseline Correction:**
+- Enable for better sensitivity
+- Method: Weighted moving average
+- Window width: Depends on peak width
+
+### Deconvolution Parameters
+
+**Sigma Window Value:**
+- Controls peak sharpness detection
+- Range: 0.1 - 1.0
+- Typical: 0.5 for metabolomics, 0.7 for lipidomics
+
+**Deconvolution Settings:**
+- MS/MS abundance cutoff: 0-10%
+- Exclude isotope ions: Yes (recommended)
+- Exclude after precursor: Yes for DDA
+
+## Step 4: Identification
+
+### MSP Library Search
+
+**Parameter Setup:**
+- **MSP file path**: Browse to spectral library
+- **Retention time tolerance**: 0.5-2.0 min
+- **Accurate mass tolerance (MS1)**: 0.01 Da or 10 ppm
+- **MS/MS tolerance**: 0.05 Da or 20 ppm
+- **Minimum similarity score**: 70-85%
+
+**Score Types:**
+- **Dot product**: Total similarity
+- **Reverse dot product**: Library coverage
+- **Presence**: Fragment ion matching
+- **Total score**: Combined metrics
+
+### Text Library (Post-Identification)
+
+**Format Requirements:**
+- Column 1: Metabolite name
+- Column 2: Accurate mass (m/z)
+- Column 3: Retention time (optional)
+- Column 4: Adduct type (optional)
+
+**Tolerance Settings:**
+- Mass tolerance: 0.005-0.01 Da
+- RT tolerance: 0.1-0.5 min
+
+### Adduct Ion Settings
+
+**Common Adducts to Enable:**
+
+**Positive Mode:**
+- [M+H]+
+- [M+Na]+
+- [M+NH4]+
+- [M+K]+
+- [M-H2O+H]+
+- [2M+H]+
+
+**Negative Mode:**
+- [M-H]-
+- [M+FA-H]-
+- [M+Hac-H]-
+- [M+Cl]-
+- [2M-H]-
+
+## Step 5: Alignment
+
+### Alignment Parameters
+
+**Retention Time Correction:**
+- **Method**: Peak alignment based on representative file
+- **Reference file**: Auto-select or manual
+- **RT tolerance**: 0.05-0.2 min
+- **Factor**: 0.5 (typical)
+
+**Peak Alignment:**
+- **Mass tolerance**: 0.015 Da or 15 ppm
+- **RT tolerance**: 0.075-0.15 min
+- **Peak count filter**: Detected in X% of samples
+
+**Advanced Options:**
+- **Gap filling**: Enable (recommended)
+- **Gap filling RT tolerance**: Same as alignment
+- **Gap filling mass tolerance**: Same as alignment
+
+::: {.callout-warning}
+## Alignment Considerations
+
+Too strict tolerances may create duplicate features. Too loose tolerances may merge distinct compounds. Optimize using QC samples.
+:::
+
+### Alignment Quality Check
+
+**Post-Alignment Review:**
+1. Check alignment spot table
+2. Examine retention time distribution
+3. Review mass accuracy distribution
+4. Inspect QC sample reproducibility
+5. Validate known compounds
+
+## Step 6: Filtering and Normalization
+
+### Data Filtering
+
+**Blank Filtering:**
+- Remove peaks present in blanks
+- Blank threshold: 3-5x blank intensity
+- Can save good features removed by blank filter
+
+**Sample Frequency:**
+- Minimum % of samples: 50-80%
+- Per class or overall
+- Balance data completeness vs. quality
+
+**QC-Based Filtering:**
+- Coefficient of variation (CV) in QC: <30%
+- Remove unstable features
+
+### Normalization Methods
+
+**Available Methods:**
+- **LOWESS (LOESS)**: Removes systematic bias
+- **Internal standard**: Based on IS intensity
+- **Total ion current (TIC)**: Sum normalization
+- **mTIC**: Median-based TIC
+- **Sample-specific**: Custom factors
+
+**Recommended Approach:**
+- QC-based LOWESS for large studies
+- Internal standard when available
+- None if already normalized externally
+
+## Step 7: Data Export
+
+### Peak Table Export
+
+**Export Options:**
+- Height vs. Area
+- Normalized vs. Raw
+- Gap-filled vs. Original
+- Include identification info
+
+**Export Formats:**
+- **CSV/TSV**: Universal format
+- **MAT**: For MATLAB
+- **MSDIAL**: For re-import
+
+**Export for Analysis Tools:**
+- MetaboAnalyst format
+- SIMCA format
+- MZmine format
+
+### Spectral Export
+
+**MSP Export:**
+- Representative spectra
+- All spectra per compound
+- Parameters used
+
+**MGF Export:**
+- For GNPS molecular networking
+- For MetFrag/CSI:FingerID
+
+### Statistical Export
+
+**PCA Export:**
+- Score plot data
+- Loading plot data
+- Contribution values
+
+## Step 8: Quality Control
+
+### Visual Inspection
+
+**Check These Items:**
+1. Peak shape in chromatograms
+2. Mass spectra quality
+3. Alignment quality
+4. Retention time stability
+5. Mass accuracy
+
+### Statistical QC
+
+**PCA Analysis:**
+- QC samples should cluster tightly
+- No outliers unless expected
+- Biological groups should separate
+
+**CV Analysis:**
+- Calculate CV in QC samples
+- Target: <20% for most features
+- Remove high-CV features if needed
+
+### Manual Curation
+
+**When to Manually Curate:**
+- Important biomarkers
+- Known standards
+- Questionable identifications
+- Unexpected results
+
+**Curation Steps:**
+1. Review raw chromatogram
+2. Check MS/MS spectrum
+3. Verify identification
+4. Document changes
+
+## Troubleshooting
+
+### Too Many Peaks Detected
+
+**Solutions:**
+- Increase minimum peak height
+- Increase minimum peak width
+- Narrow retention time range
+- Increase smoothing level
+
+### Too Few Peaks Detected
+
+**Solutions:**
+- Decrease minimum peak height
+- Check data type (centroid vs profile)
+- Expand retention time range
+- Review raw data with Raw Data Viewer
+
+### Poor Alignment
+
+**Solutions:**
+- Adjust RT tolerance
+- Use different reference file
+- Check chromatographic stability
+- Consider batch effects
+
+### Poor Identification Rate
+
+**Solutions:**
+- Check mass tolerance settings
+- Verify spectral library quality
+- Enable more adduct types
+- Consider in silico tools (MS-FINDER)
+
+## Best Practices
+
+### Before Processing
+
+1. Organize files systematically
+2. Include appropriate QC samples
+3. Document experimental design
+4. Check data quality with Raw Data Viewer
+
+### During Processing
+
+1. Start with recommended parameters
+2. Test on subset of samples first
+3. Monitor processing progress
+4. Save project regularly
+
+### After Processing
+
+1. Validate key identifications
+2. Check statistical distributions
+3. Compare with expected results
+4. Document parameter choices
+5. Back up processed data
+
+---
+
+::: {.callout-tip}
+## Workflow Optimization
+
+After your first analysis, review results and optimize parameters. Iterative refinement based on QC metrics leads to better data quality.
+:::
